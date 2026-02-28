@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonata — Master Classical Piano with Real Sheet Music</title>
+    <meta name="description" content="Learn classical piano with professional engraved sheet music, real Yamaha C5 piano sound, and intelligent practice tools. 200+ masterpieces. Fully offline.">
+    <meta property="og:title" content="Sonata — Master Classical Piano">
+    <meta property="og:description" content="Professional engraved sheet music, real Yamaha C5 piano sound, and intelligent practice tools. 200+ classical masterpieces, fully offline.">
+    <meta property="og:image" content="https://sonatapiano.app/assets/app-icon.png">
+    <meta property="og:url" content="https://sonatapiano.app">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- TODO: Replace with actual App Store ID once live -->
+    <!-- <meta name="apple-itunes-app" content="app-id=YOUR_APP_ID"> -->
+    <link rel="icon" type="image/png" href="assets/app-icon.png">
+    <link rel="apple-touch-icon" href="assets/app-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        /* ========================================
+           CSS VARIABLES
+           ======================================== */
+        :root {
+            --bg-deepest: #04040C;
+            --bg-dark: #08081A;
+            --bg-surface: #10102A;
+            --bg-card: #161636;
+            --bg-card-hover: #1C1C40;
+            --gold: #C9A84C;
+            --gold-dim: rgba(201, 168, 76, 0.35);
+            --gold-faint: rgba(201, 168, 76, 0.08);
+            --amber: #EF7D00;
+            --amber-glow: rgba(239, 125, 0, 0.25);
+            --blue: #2979FF;
+            --green: #00C853;
+            --text-bright: #FEFCF6;
+            --text-primary: #E8E2D6;
+            --text-secondary: #9B96A8;
+            --text-muted: #5E596E;
+            --border: rgba(201, 168, 76, 0.12);
+            --font-display: 'Cormorant Garamond', 'Georgia', serif;
+            --font-body: 'DM Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        /* ========================================
+           RESET & BASE
+           ======================================== */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+        body {
+            font-family: var(--font-body);
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--text-primary);
+            background: var(--bg-deepest);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Grain texture overlay */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            opacity: 0.028;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 180px;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        img { display: block; max-width: 100%; }
+        a { color: inherit; text-decoration: none; }
+
+        /* ========================================
+           TYPOGRAPHY
+           ======================================== */
+        .section-label {
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--gold);
+            display: block;
+            margin-bottom: 1.25rem;
+        }
+        h1, h2, h3 { font-family: var(--font-display); font-weight: 400; }
+        h2 {
+            font-size: clamp(2rem, 4.5vw, 3.25rem);
+            line-height: 1.15;
+            color: var(--text-bright);
+            margin-bottom: 1.5rem;
+        }
+
+        /* ========================================
+           LAYOUT
+           ======================================== */
+        .section-inner {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        section {
+            padding: 7rem 0;
+            position: relative;
+        }
+
+        /* ========================================
+           SCROLL REVEAL
+           ======================================== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.75s cubic-bezier(0.23, 1, 0.32, 1),
+                        transform 0.75s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-d1 { transition-delay: 0.08s; }
+        .reveal-d2 { transition-delay: 0.16s; }
+        .reveal-d3 { transition-delay: 0.24s; }
+        .reveal-d4 { transition-delay: 0.32s; }
+        .reveal-d5 { transition-delay: 0.40s; }
+
+        /* ========================================
+           NAVIGATION
+           ======================================== */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 500;
+            padding: 1.1rem 0;
+            transition: background 0.4s, box-shadow 0.4s;
+        }
+        .nav.scrolled {
+            background: rgba(4, 4, 12, 0.88);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 1px 0 var(--border);
+        }
+        .nav-inner {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .nav-logo {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-bright);
+            letter-spacing: 0.02em;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2.25rem;
+        }
+        .nav-links a {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: color 0.25s;
+            letter-spacing: 0.01em;
+        }
+        .nav-links a:hover { color: var(--text-bright); }
+        .nav-cta {
+            background: var(--amber);
+            color: var(--bg-deepest) !important;
+            font-weight: 700 !important;
+            padding: 0.5rem 1.25rem;
+            border-radius: 8px;
+            transition: background 0.25s, transform 0.25s !important;
+        }
+        .nav-cta:hover {
+            background: #FF8F1A;
+            transform: translateY(-1px);
+        }
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.4rem;
+            cursor: pointer;
+            padding: 0.25rem;
+        }
+
+        /* ========================================
+           HERO
+           ======================================== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            padding: 8rem 0 6rem;
+            background: radial-gradient(ellipse 70% 50% at 50% 40%, rgba(201, 168, 76, 0.06) 0%, transparent 70%),
+                        radial-gradient(ellipse 90% 60% at 50% 100%, rgba(16, 16, 42, 0.8) 0%, transparent 60%),
+                        var(--bg-deepest);
+        }
+        .hero-glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(201, 168, 76, 0.1) 0%, rgba(201, 168, 76, 0.03) 40%, transparent 70%);
+            top: 38%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: breathe 7s ease-in-out infinite;
+            pointer-events: none;
+        }
+        @keyframes breathe {
+            0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.08); }
+        }
+
+        /* Decorative staff lines */
+        .hero-staff {
+            position: absolute;
+            left: -5%;
+            right: -5%;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            pointer-events: none;
+        }
+        .hero-staff .staff-line {
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, var(--gold) 20%, var(--gold) 80%, transparent 100%);
+            opacity: 0;
+            animation: staff-appear 1.2s ease-out forwards;
+        }
+        .hero-staff .staff-line:nth-child(1) { animation-delay: 0.6s; }
+        .hero-staff .staff-line:nth-child(2) { animation-delay: 0.45s; }
+        .hero-staff .staff-line:nth-child(3) { animation-delay: 0.3s; }
+        .hero-staff .staff-line:nth-child(4) { animation-delay: 0.45s; }
+        .hero-staff .staff-line:nth-child(5) { animation-delay: 0.6s; }
+        @keyframes staff-appear {
+            from { transform: scaleX(0); opacity: 0; }
+            to { transform: scaleX(1); opacity: 0.055; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+            padding: 0 1.5rem;
+        }
+        .hero-icon {
+            width: 110px;
+            height: 110px;
+            margin: 0 auto 2.5rem;
+            border-radius: 24px;
+            box-shadow: 0 8px 40px rgba(201, 168, 76, 0.2),
+                        0 2px 12px rgba(0, 0, 0, 0.4);
+            animation: icon-enter 0.9s cubic-bezier(0.23, 1, 0.32, 1) 0.1s both;
+        }
+        @keyframes icon-enter {
+            from { opacity: 0; transform: translateY(20px) scale(0.92); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .hero h1 {
+            font-size: clamp(2.75rem, 6vw, 4.25rem);
+            font-weight: 300;
+            line-height: 1.1;
+            color: var(--text-bright);
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.01em;
+            animation: text-enter 0.9s cubic-bezier(0.23, 1, 0.32, 1) 0.3s both;
+        }
+        .hero h1 em {
+            font-style: italic;
+            color: var(--gold);
+        }
+        @keyframes text-enter {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hero-tagline {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            line-height: 1.75;
+            margin-bottom: 2.5rem;
+            max-width: 540px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: text-enter 0.9s cubic-bezier(0.23, 1, 0.32, 1) 0.5s both;
+        }
+        .btn-download {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: var(--text-bright);
+            color: var(--bg-deepest);
+            font-weight: 700;
+            font-size: 0.95rem;
+            padding: 0.9rem 2rem;
+            border-radius: 12px;
+            transition: transform 0.25s, box-shadow 0.25s;
+            animation: text-enter 0.9s cubic-bezier(0.23, 1, 0.32, 1) 0.65s both;
+        }
+        .btn-download:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(254, 252, 246, 0.15);
+        }
+        .btn-download svg { flex-shrink: 0; }
+        .hero-trial {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 1rem;
+            animation: text-enter 0.9s cubic-bezier(0.23, 1, 0.32, 1) 0.8s both;
+        }
+        .hero-scroll {
+            position: absolute;
+            bottom: 2.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0.3;
+            animation: hint-bounce 2.5s ease-in-out infinite;
+        }
+        @keyframes hint-bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(7px); }
+        }
+
+        /* ========================================
+           HOOK (DIFFERENTIATOR)
+           ======================================== */
+        .hook {
+            background: var(--bg-dark);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+        .hook-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        .hook h2 { margin-bottom: 1.25rem; }
+        .hook-text p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        .hook-text p:last-child { margin-bottom: 0; }
+        .hook-visual {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .notation-display {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem 2.25rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .notation-display .badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            padding: 0.3rem 0.7rem;
+            border-radius: 6px;
+        }
+        .notation-sonata {
+            border-color: rgba(201, 168, 76, 0.25);
+        }
+        .notation-sonata .badge {
+            background: var(--gold-faint);
+            color: var(--gold);
+            border: 1px solid rgba(201, 168, 76, 0.2);
+        }
+        .notation-others .badge {
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-muted);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .notation-svg { color: var(--text-primary); width: 100%; }
+        .notation-sonata .notation-svg { color: var(--gold); opacity: 0.8; }
+
+        /* Falling blocks representation */
+        .falling-blocks {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+            align-items: flex-end;
+            height: 80px;
+            opacity: 0.35;
+        }
+        .falling-block {
+            width: 22px;
+            border-radius: 3px;
+        }
+        .fb-1 { height: 45px; background: #FF6B6B; }
+        .fb-2 { height: 30px; background: #4ECDC4; }
+        .fb-3 { height: 55px; background: #45B7D1; }
+        .fb-4 { height: 20px; background: #96CEB4; }
+        .fb-5 { height: 40px; background: #FFEAA7; }
+        .fb-6 { height: 35px; background: #DDA0DD; }
+        .fb-7 { height: 50px; background: #FF6B6B; }
+        .fb-8 { height: 25px; background: #4ECDC4; }
+        .falling-blocks-label {
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.75rem;
+            font-style: italic;
+        }
+
+        /* ========================================
+           FEATURES
+           ======================================== */
+        .features { background: var(--bg-deepest); }
+        .features h2 { max-width: 500px; }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+            margin-top: 3.5rem;
+        }
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 2rem 1.75rem;
+            transition: background 0.3s, border-color 0.3s, transform 0.3s;
+            position: relative;
+        }
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 1.75rem;
+            right: 1.75rem;
+            height: 2px;
+            background: linear-gradient(90deg, var(--gold), transparent);
+            border-radius: 0 0 2px 2px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .feature-card:hover {
+            background: var(--bg-card-hover);
+            border-color: rgba(201, 168, 76, 0.2);
+            transform: translateY(-3px);
+        }
+        .feature-card:hover::before { opacity: 1; }
+        .feature-card h3 {
+            font-size: 1.35rem;
+            font-weight: 400;
+            color: var(--text-bright);
+            margin-bottom: 0.6rem;
+            line-height: 1.25;
+        }
+        .feature-card p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.65;
+        }
+        .feature-tag {
+            display: inline-block;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 0.2rem 0.55rem;
+            border-radius: 5px;
+            margin-bottom: 0.75rem;
+        }
+        .tag-essential {
+            background: rgba(201, 168, 76, 0.1);
+            color: var(--gold);
+            border: 1px solid rgba(201, 168, 76, 0.15);
+        }
+        .tag-input {
+            background: rgba(41, 121, 255, 0.1);
+            color: var(--blue);
+            border: 1px solid rgba(41, 121, 255, 0.15);
+        }
+        .tag-sound {
+            background: rgba(0, 200, 83, 0.1);
+            color: var(--green);
+            border: 1px solid rgba(0, 200, 83, 0.15);
+        }
+
+        /* ========================================
+           LIBRARY
+           ======================================== */
+        .library {
+            background: var(--bg-dark);
+            border-top: 1px solid var(--border);
+            overflow: hidden;
+        }
+        .library .section-inner { text-align: center; }
+        .library h2 { max-width: 600px; margin-left: auto; margin-right: auto; }
+
+        /* Composer marquee */
+        .marquee-wrapper {
+            margin: 3.5rem -1.5rem 3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+            -webkit-mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+        }
+        .marquee-track {
+            display: flex;
+            overflow: hidden;
+        }
+        .marquee-content {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            flex-shrink: 0;
+            white-space: nowrap;
+        }
+        .marquee-content span {
+            font-family: var(--font-display);
+            font-size: 1.65rem;
+            font-weight: 300;
+            color: var(--text-secondary);
+            padding: 0 1.25rem;
+        }
+        .marquee-content .dot {
+            font-size: 0.5rem;
+            color: var(--gold-dim);
+            padding: 0 0.25rem;
+        }
+        .marquee-left .marquee-content { animation: scroll-left 50s linear infinite; }
+        .marquee-right .marquee-content { animation: scroll-right 55s linear infinite; }
+        @keyframes scroll-left {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+        @keyframes scroll-right {
+            from { transform: translateX(-50%); }
+            to { transform: translateX(0); }
+        }
+
+        /* Difficulty tiers */
+        .difficulty-track {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .diff-tier {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.55rem 1.1rem;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+        .diff-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+        .diff-beginner { background: #4CAF50; }
+        .diff-intermediate { background: #EF7D00; }
+        .diff-advanced { background: #9C27B0; }
+        .diff-expert { background: #E53935; }
+        .diff-arrow {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+        }
+
+        /* ========================================
+           PRICING
+           ======================================== */
+        .pricing { background: var(--bg-deepest); }
+        .pricing .section-inner { text-align: center; }
+        .pricing h2 { max-width: 500px; margin-left: auto; margin-right: auto; }
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+            margin-top: 3rem;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .pricing-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.25rem 1.75rem;
+            text-align: center;
+            transition: transform 0.3s, border-color 0.3s;
+            position: relative;
+        }
+        .pricing-card:hover {
+            transform: translateY(-3px);
+        }
+        .pricing-card.featured {
+            border-color: var(--gold);
+            background: linear-gradient(180deg, rgba(201, 168, 76, 0.06) 0%, var(--bg-card) 40%);
+        }
+        .pricing-badge {
+            position: absolute;
+            top: -0.7rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gold);
+            color: var(--bg-deepest);
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 0.3rem 0.9rem;
+            border-radius: 6px;
+            white-space: nowrap;
+        }
+        .pricing-plan {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+        }
+        .pricing-amount {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 600;
+            color: var(--text-bright);
+            line-height: 1;
+        }
+        .pricing-amount .currency {
+            font-size: 1.5rem;
+            vertical-align: super;
+            margin-right: 0.1rem;
+        }
+        .pricing-period {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 0.4rem;
+            margin-bottom: 1.5rem;
+        }
+        .pricing-detail {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.75rem;
+            min-height: 1.5rem;
+        }
+        .pricing-btn {
+            display: block;
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 10px;
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.25s, box-shadow 0.25s;
+            text-align: center;
+        }
+        .pricing-btn:hover {
+            transform: translateY(-1px);
+        }
+        .pricing-btn-primary {
+            background: var(--amber);
+            color: var(--bg-deepest);
+        }
+        .pricing-btn-primary:hover {
+            box-shadow: 0 4px 18px var(--amber-glow);
+        }
+        .pricing-btn-secondary {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+        .pricing-btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .pricing-note {
+            margin-top: 2.5rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* ========================================
+           TRUST
+           ======================================== */
+        .trust {
+            background: var(--bg-dark);
+            border-top: 1px solid var(--border);
+            padding: 5rem 0;
+        }
+        .trust .section-inner { text-align: center; }
+        .trust h2 {
+            font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+            margin-bottom: 2.5rem;
+        }
+        .trust-grid {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .trust-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: var(--gold-faint);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: var(--gold);
+        }
+        .trust-label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        /* ========================================
+           FOOTER
+           ======================================== */
+        .footer {
+            padding: 2.5rem 0;
+            border-top: 1px solid var(--border);
+            background: var(--bg-deepest);
+        }
+        .footer-inner {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .footer-copy {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+        .footer-links a {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            transition: color 0.25s;
+        }
+        .footer-links a:hover { color: var(--text-secondary); }
+
+        /* ========================================
+           RESPONSIVE
+           ======================================== */
+        @media (max-width: 900px) {
+            .features-grid { grid-template-columns: repeat(2, 1fr); }
+            .pricing-grid { grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+            .hook-grid { gap: 2.5rem; }
+        }
+        @media (max-width: 768px) {
+            section { padding: 5rem 0; }
+            .nav-links { display: none; }
+            .nav-links.open {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(4, 4, 12, 0.97);
+                backdrop-filter: blur(16px);
+                -webkit-backdrop-filter: blur(16px);
+                padding: 1.25rem 1.5rem;
+                gap: 1rem;
+                border-bottom: 1px solid var(--border);
+            }
+            .nav-links.open a { font-size: 1rem; }
+            .nav-toggle { display: block; }
+
+            .hook-grid {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+            .hook-visual { order: -1; }
+
+            .features-grid { grid-template-columns: 1fr; }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                max-width: 380px;
+            }
+            .pricing-card.featured { order: -1; }
+
+            .trust-grid { flex-direction: column; align-items: center; gap: 1.5rem; }
+
+            .footer-inner { flex-direction: column; gap: 1rem; text-align: center; }
+            .footer-links { gap: 1.25rem; }
+
+            .hero { padding: 7rem 0 5rem; }
+            .hero-icon { width: 90px; height: 90px; margin-bottom: 2rem; }
+            .hero-scroll { display: none; }
+
+            .marquee-content span { font-size: 1.25rem; }
+        }
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 2.25rem; }
+            .hero-tagline { font-size: 0.95rem; }
+            .btn-download { font-size: 0.9rem; padding: 0.8rem 1.5rem; }
+            .feature-card { padding: 1.5rem 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ======== NAVIGATION ======== -->
+    <nav class="nav" id="nav">
+        <div class="nav-inner">
+            <a href="/" class="nav-logo">Sonata</a>
+            <div class="nav-links" id="navLinks">
+                <a href="#features">Features</a>
+                <a href="#library">Library</a>
+                <a href="#pricing">Pricing</a>
+                <!-- TODO: Replace # with actual App Store link -->
+                <a href="#" class="nav-cta">Download</a>
+            </div>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ======== HERO ======== -->
+    <section class="hero" id="hero">
+        <div class="hero-glow" aria-hidden="true"></div>
+        <div class="hero-staff" aria-hidden="true">
+            <div class="staff-line"></div>
+            <div class="staff-line"></div>
+            <div class="staff-line"></div>
+            <div class="staff-line"></div>
+            <div class="staff-line"></div>
+        </div>
+        <div class="hero-content">
+            <img src="assets/app-icon.png" alt="Sonata" class="hero-icon" width="110" height="110">
+            <h1>Your piano journey<br><em>begins.</em></h1>
+            <p class="hero-tagline">Master classical piano with professional engraved sheet music, real Yamaha&nbsp;C5 piano sound, and intelligent practice tools &mdash; all on your device.</p>
+            <!-- TODO: Replace # with actual App Store link -->
+            <a href="#" class="btn-download">
+                <svg width="18" height="22" viewBox="0 0 18 22" fill="currentColor" aria-hidden="true"><path d="M14.94 11.58c-.02-2.28 1.86-3.37 1.95-3.43-1.06-1.55-2.71-1.76-3.3-1.79-1.4-.14-2.74.83-3.45.83-.72 0-1.82-.81-2.99-.79-1.54.02-2.96.9-3.75 2.28-1.6 2.78-.41 6.9 1.15 9.16.76 1.1 1.67 2.34 2.87 2.29 1.15-.05 1.59-.74 2.98-.74 1.39 0 1.78.74 2.99.72 1.24-.02 2.03-1.12 2.78-2.23.88-1.28 1.24-2.51 1.26-2.58-.03-.01-2.42-.93-2.44-3.7zM12.63 4.15c.63-.77 1.06-1.83.94-2.9-.91.04-2.01.61-2.66 1.37-.58.67-1.09 1.75-.96 2.78 1.02.08 2.05-.52 2.68-1.25z"/></svg>
+                Download on the App Store
+            </a>
+            <p class="hero-trial">7-day free trial &middot; No credit card required</p>
+        </div>
+        <div class="hero-scroll" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10l5 5 5-5"/></svg>
+        </div>
+    </section>
+
+    <!-- ======== HOOK: DIFFERENTIATOR ======== -->
+    <section class="hook" id="hook">
+        <div class="section-inner">
+            <div class="hook-grid">
+                <div class="hook-text">
+                    <span class="section-label reveal">The Difference</span>
+                    <h2 class="reveal reveal-d1">Real notation.<br>Not falling blocks.</h2>
+                    <p class="reveal reveal-d2">While other apps gamify your practice with falling blocks and colored lights, Sonata displays professional engraved sheet music &mdash; the same notation you&rsquo;d see in a printed score.</p>
+                    <p class="reveal reveal-d3">Build real musical literacy from day one.</p>
+                </div>
+                <div class="hook-visual reveal reveal-d2">
+                    <div class="notation-display notation-others">
+                        <span class="badge">Other Apps</span>
+                        <div class="falling-blocks">
+                            <div class="falling-block fb-1"></div>
+                            <div class="falling-block fb-2"></div>
+                            <div class="falling-block fb-3"></div>
+                            <div class="falling-block fb-4"></div>
+                            <div class="falling-block fb-5"></div>
+                            <div class="falling-block fb-6"></div>
+                            <div class="falling-block fb-7"></div>
+                            <div class="falling-block fb-8"></div>
+                        </div>
+                        <p class="falling-blocks-label">Colored blocks fall&hellip; but you never learn to read music.</p>
+                    </div>
+                    <div class="notation-display notation-sonata">
+                        <span class="badge">Sonata</span>
+                        <svg class="notation-svg" viewBox="0 0 360 90" fill="none" aria-hidden="true">
+                            <!-- Staff lines -->
+                            <line x1="0" y1="22" x2="360" y2="22" stroke="currentColor" stroke-width="0.7" opacity="0.5"/>
+                            <line x1="0" y1="34" x2="360" y2="34" stroke="currentColor" stroke-width="0.7" opacity="0.5"/>
+                            <line x1="0" y1="46" x2="360" y2="46" stroke="currentColor" stroke-width="0.7" opacity="0.5"/>
+                            <line x1="0" y1="58" x2="360" y2="58" stroke="currentColor" stroke-width="0.7" opacity="0.5"/>
+                            <line x1="0" y1="70" x2="360" y2="70" stroke="currentColor" stroke-width="0.7" opacity="0.5"/>
+                            <!-- Treble clef -->
+                            <text x="8" y="62" font-size="52" fill="currentColor" font-family="serif" opacity="0.7">&#119070;</text>
+                            <!-- Time signature -->
+                            <text x="52" y="40" font-size="18" fill="currentColor" font-family="serif" font-weight="bold" opacity="0.6">3</text>
+                            <text x="52" y="62" font-size="18" fill="currentColor" font-family="serif" font-weight="bold" opacity="0.6">4</text>
+                            <!-- Notes — simplified Moonlight Sonata motif -->
+                            <ellipse cx="90" cy="64" rx="6.5" ry="5" fill="currentColor" transform="rotate(-12, 90, 64)" opacity="0.75"/>
+                            <line x1="96" y1="64" x2="96" y2="28" stroke="currentColor" stroke-width="1.5" opacity="0.75"/>
+                            <ellipse cx="120" cy="52" rx="6.5" ry="5" fill="currentColor" transform="rotate(-12, 120, 52)" opacity="0.75"/>
+                            <line x1="126" y1="52" x2="126" y2="18" stroke="currentColor" stroke-width="1.5" opacity="0.75"/>
+                            <ellipse cx="150" cy="58" rx="6.5" ry="5" fill="currentColor" transform="rotate(-12, 150, 58)" opacity="0.75"/>
+                            <line x1="156" y1="58" x2="156" y2="22" stroke="currentColor" stroke-width="1.5" opacity="0.75"/>
+                            <!-- Bar line -->
+                            <line x1="180" y1="22" x2="180" y2="70" stroke="currentColor" stroke-width="0.8" opacity="0.4"/>
+                            <ellipse cx="205" cy="46" rx="6.5" ry="5" fill="currentColor" transform="rotate(-12, 205, 46)" opacity="0.75"/>
+                            <line x1="211" y1="46" x2="211" y2="14" stroke="currentColor" stroke-width="1.5" opacity="0.75"/>
+                            <ellipse cx="235" cy="40" rx="6.5" ry="5" fill="currentColor" transform="rotate(-12, 235, 40)" opacity="0.75"/>
+                            <line x1="241" y1="40" x2="241" y2="10" stroke="currentColor" stroke-width="1.5" opacity="0.75"/>
+                            <ellipse cx="265" cy="52" rx="6.5" ry="5" fill="currentColor" transform="rotate(-12, 265, 52)" opacity="0.75"/>
+                            <line x1="271" y1="52" x2="271" y2="18" stroke="currentColor" stroke-width="1.5" opacity="0.75"/>
+                            <!-- Bar line -->
+                            <line x1="295" y1="22" x2="295" y2="70" stroke="currentColor" stroke-width="0.8" opacity="0.4"/>
+                            <ellipse cx="320" cy="58" rx="6.5" ry="5" fill="currentColor" transform="rotate(-12, 320, 58)" opacity="0.75"/>
+                            <line x1="326" y1="58" x2="326" y2="22" stroke="currentColor" stroke-width="1.5" opacity="0.75"/>
+                            <ellipse cx="348" cy="46" rx="6.5" ry="5" fill="none" stroke="currentColor" stroke-width="1.5" transform="rotate(-12, 348, 46)" opacity="0.55"/>
+                            <line x1="354" y1="46" x2="354" y2="14" stroke="currentColor" stroke-width="1.5" opacity="0.55"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======== FEATURES ======== -->
+    <section class="features" id="features">
+        <div class="section-inner">
+            <span class="section-label reveal">Practice Tools</span>
+            <h2 class="reveal reveal-d1">Everything you need to master any piece.</h2>
+            <div class="features-grid">
+                <div class="feature-card reveal reveal-d1">
+                    <span class="feature-tag tag-essential">Essential</span>
+                    <h3>Wait Mode</h3>
+                    <p>The score pauses until you play the correct notes. The most effective way to learn a new passage, measure by measure.</p>
+                </div>
+                <div class="feature-card reveal reveal-d2">
+                    <span class="feature-tag tag-essential">Essential</span>
+                    <h3>Hand Isolation</h3>
+                    <p>Practice <span style="color:var(--blue)">right hand</span> and <span style="color:var(--green)">left hand</span> independently. Master each part before combining them together.</p>
+                </div>
+                <div class="feature-card reveal reveal-d3">
+                    <span class="feature-tag tag-sound">Sound</span>
+                    <h3>Yamaha C5 Grand</h3>
+                    <p>Every note plays back as a real Yamaha C5 grand piano recording. Not synthesized, not sampled patches &mdash; real piano.</p>
+                </div>
+                <div class="feature-card reveal reveal-d1">
+                    <span class="feature-tag tag-essential">Essential</span>
+                    <h3>Tempo Control</h3>
+                    <p>Slow down to 25% or speed up to 200%. Master every passage at your own pace, then bring it up to performance tempo.</p>
+                </div>
+                <div class="feature-card reveal reveal-d2">
+                    <span class="feature-tag tag-essential">Essential</span>
+                    <h3>Section Looping</h3>
+                    <p>Loop any range of measures. Save named practice sections for targeted drilling on the passages that challenge you most.</p>
+                </div>
+                <div class="feature-card reveal reveal-d3">
+                    <span class="feature-tag tag-input">Input</span>
+                    <h3>Connect Any Way</h3>
+                    <p>MIDI keyboard via Bluetooth or USB, acoustic piano via microphone detection, or the on-screen 88-key touch keyboard.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======== LIBRARY ======== -->
+    <section class="library" id="library">
+        <div class="section-inner">
+            <span class="section-label reveal">The Library</span>
+            <h2 class="reveal reveal-d1">200+ masterpieces from the greatest composers.</h2>
+            <p class="reveal reveal-d2" style="color:var(--text-secondary); max-width:520px; margin: 0 auto 0; font-size:1rem;">All included. All offline. From your first scale to concert-level repertoire.</p>
+        </div>
+
+        <div class="marquee-wrapper" aria-hidden="true">
+            <div class="marquee-track marquee-left">
+                <div class="marquee-content">
+                    <span>Bach</span><span class="dot">&middot;</span>
+                    <span>Beethoven</span><span class="dot">&middot;</span>
+                    <span>Chopin</span><span class="dot">&middot;</span>
+                    <span>Mozart</span><span class="dot">&middot;</span>
+                    <span>Debussy</span><span class="dot">&middot;</span>
+                    <span>Liszt</span><span class="dot">&middot;</span>
+                    <span>Rachmaninoff</span><span class="dot">&middot;</span>
+                    <span>Schubert</span><span class="dot">&middot;</span>
+                    <span>Ravel</span><span class="dot">&middot;</span>
+                    <span>Satie</span><span class="dot">&middot;</span>
+                    <span>Brahms</span><span class="dot">&middot;</span>
+                    <span>Prokofiev</span><span class="dot">&middot;</span>
+                </div>
+                <div class="marquee-content">
+                    <span>Bach</span><span class="dot">&middot;</span>
+                    <span>Beethoven</span><span class="dot">&middot;</span>
+                    <span>Chopin</span><span class="dot">&middot;</span>
+                    <span>Mozart</span><span class="dot">&middot;</span>
+                    <span>Debussy</span><span class="dot">&middot;</span>
+                    <span>Liszt</span><span class="dot">&middot;</span>
+                    <span>Rachmaninoff</span><span class="dot">&middot;</span>
+                    <span>Schubert</span><span class="dot">&middot;</span>
+                    <span>Ravel</span><span class="dot">&middot;</span>
+                    <span>Satie</span><span class="dot">&middot;</span>
+                    <span>Brahms</span><span class="dot">&middot;</span>
+                    <span>Prokofiev</span><span class="dot">&middot;</span>
+                </div>
+            </div>
+            <div class="marquee-track marquee-right">
+                <div class="marquee-content">
+                    <span>Schumann</span><span class="dot">&middot;</span>
+                    <span>Tchaikovsky</span><span class="dot">&middot;</span>
+                    <span>Scriabin</span><span class="dot">&middot;</span>
+                    <span>Joplin</span><span class="dot">&middot;</span>
+                    <span>Handel</span><span class="dot">&middot;</span>
+                    <span>Haydn</span><span class="dot">&middot;</span>
+                    <span>Pachelbel</span><span class="dot">&middot;</span>
+                    <span>Grieg</span><span class="dot">&middot;</span>
+                    <span>Rimsky-Korsakov</span><span class="dot">&middot;</span>
+                    <span>Balakirev</span><span class="dot">&middot;</span>
+                    <span>Senneville</span><span class="dot">&middot;</span>
+                </div>
+                <div class="marquee-content">
+                    <span>Schumann</span><span class="dot">&middot;</span>
+                    <span>Tchaikovsky</span><span class="dot">&middot;</span>
+                    <span>Scriabin</span><span class="dot">&middot;</span>
+                    <span>Joplin</span><span class="dot">&middot;</span>
+                    <span>Handel</span><span class="dot">&middot;</span>
+                    <span>Haydn</span><span class="dot">&middot;</span>
+                    <span>Pachelbel</span><span class="dot">&middot;</span>
+                    <span>Grieg</span><span class="dot">&middot;</span>
+                    <span>Rimsky-Korsakov</span><span class="dot">&middot;</span>
+                    <span>Balakirev</span><span class="dot">&middot;</span>
+                    <span>Senneville</span><span class="dot">&middot;</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-inner">
+            <div class="difficulty-track reveal">
+                <div class="diff-tier"><span class="diff-dot diff-beginner"></span> Foundations</div>
+                <span class="diff-arrow">&rarr;</span>
+                <div class="diff-tier"><span class="diff-dot diff-intermediate"></span> Building Skills</div>
+                <span class="diff-arrow">&rarr;</span>
+                <div class="diff-tier"><span class="diff-dot diff-advanced"></span> Advancing</div>
+                <span class="diff-arrow">&rarr;</span>
+                <div class="diff-tier"><span class="diff-dot diff-expert"></span> Mastery</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======== PRICING ======== -->
+    <section class="pricing" id="pricing">
+        <div class="section-inner">
+            <span class="section-label reveal">Pricing</span>
+            <h2 class="reveal reveal-d1">Start your 7-day free trial.</h2>
+
+            <div class="pricing-grid">
+                <div class="pricing-card reveal reveal-d1">
+                    <p class="pricing-plan">Monthly</p>
+                    <p class="pricing-amount"><span class="currency">$</span>9<span style="font-size:1.5rem">.99</span></p>
+                    <p class="pricing-period">per month</p>
+                    <p class="pricing-detail">Flexibility to explore</p>
+                    <!-- TODO: Replace # with actual App Store link -->
+                    <a href="#" class="pricing-btn pricing-btn-secondary">Start Free Trial</a>
+                </div>
+                <div class="pricing-card featured reveal reveal-d2">
+                    <span class="pricing-badge">Best Value</span>
+                    <p class="pricing-plan">Annual</p>
+                    <p class="pricing-amount"><span class="currency">$</span>69<span style="font-size:1.5rem">.99</span></p>
+                    <p class="pricing-period">per year &middot; ~$5.83/mo</p>
+                    <p class="pricing-detail">Save 42%</p>
+                    <!-- TODO: Replace # with actual App Store link -->
+                    <a href="#" class="pricing-btn pricing-btn-primary">Start Free Trial</a>
+                </div>
+                <div class="pricing-card reveal reveal-d3">
+                    <p class="pricing-plan">Lifetime</p>
+                    <p class="pricing-amount"><span class="currency">$</span>249<span style="font-size:1.5rem">.99</span></p>
+                    <p class="pricing-period">one-time payment</p>
+                    <p class="pricing-detail">Pay once, yours forever</p>
+                    <!-- TODO: Replace # with actual App Store link -->
+                    <a href="#" class="pricing-btn pricing-btn-secondary">Start Free Trial</a>
+                </div>
+            </div>
+
+            <p class="pricing-note reveal">Full access to everything during your trial. Cancel anytime.</p>
+        </div>
+    </section>
+
+    <!-- ======== TRUST ======== -->
+    <section class="trust">
+        <div class="section-inner">
+            <h2 class="reveal">Your data never leaves your device.</h2>
+            <div class="trust-grid">
+                <div class="trust-item reveal reveal-d1">
+                    <div class="trust-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/><line x1="8" y1="7" x2="16" y2="7" opacity="0"/></svg>
+                    </div>
+                    <span class="trust-label">No accounts required</span>
+                </div>
+                <div class="trust-item reveal reveal-d2">
+                    <div class="trust-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/><line x1="1" y1="1" x2="23" y2="23" stroke-width="2"/></svg>
+                    </div>
+                    <span class="trust-label">No tracking or analytics</span>
+                </div>
+                <div class="trust-item reveal reveal-d3">
+                    <div class="trust-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="11" width="20" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                    </div>
+                    <span class="trust-label">Works completely offline</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======== FOOTER ======== -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <p class="footer-copy">&copy; 2026 Sonata Development Team. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Use</a>
+                <a href="mailto:legal@sonatapiano.app">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        /* Scroll reveal with IntersectionObserver */
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.reveal').forEach(function(el) {
+            observer.observe(el);
+        });
+
+        /* Nav scroll state */
+        var nav = document.getElementById('nav');
+        var scrollTick = false;
+        window.addEventListener('scroll', function() {
+            if (!scrollTick) {
+                requestAnimationFrame(function() {
+                    nav.classList.toggle('scrolled', window.scrollY > 60);
+                    scrollTick = false;
+                });
+                scrollTick = true;
+            }
+        });
+
+        /* Mobile menu toggle */
+        var toggle = document.getElementById('navToggle');
+        var links = document.getElementById('navLinks');
+        toggle.addEventListener('click', function() {
+            links.classList.toggle('open');
+        });
+        /* Close mobile menu on link click */
+        links.querySelectorAll('a').forEach(function(a) {
+            a.addEventListener('click', function() {
+                links.classList.remove('open');
+            });
+        });
+    </script>
+</body>
+</html>
