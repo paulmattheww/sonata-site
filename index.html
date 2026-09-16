@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sonata Piano — Master Classical Piano with Real Sheet Music</title>
-    <meta name="description" content="Learn classical piano with professional engraved sheet music, real Yamaha C5 piano sound, and intelligent practice tools. 140+ masterpieces. Fully offline.">
-    <meta property="og:title" content="Sonata Piano — Master Classical Piano">
-    <meta property="og:description" content="Professional engraved sheet music, real Yamaha C5 piano sound, and intelligent practice tools. 140+ classical masterpieces, fully offline.">
-    <meta property="og:image" content="https://sonatapiano.app/assets/app-icon.png">
+    <title>Sonata Piano — Practice Classical Piano at Your Pace</title>
+    <meta name="description" content="Make room for music with Sonata Piano. Explore 140+ classical pieces, slow the tempo, practice one hand at a time, and preview the new iPad falling-note guide.">
+    <meta property="og:title" content="Sonata Piano — Make Room for Music">
+    <meta property="og:description" content="See the music. Set your pace. Explore classical piano with sheet music, hand-by-hand practice, and a preview of the new iPad note guide.">
+    <meta property="og:image" content="https://sonatapiano.app/assets/campaign-1.0.6/video-poster.png">
+    <meta property="og:image:alt" content="Preview of Sonata's iPad falling-note guide alongside sheet music and piano keys">
     <meta property="og:url" content="https://sonatapiano.app">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
@@ -22,23 +23,23 @@
            CSS VARIABLES
            ======================================== */
         :root {
-            --bg-deepest: #04040C;
-            --bg-dark: #08081A;
-            --bg-surface: #10102A;
-            --bg-card: #161636;
-            --bg-card-hover: #1C1C40;
-            --gold: #C9A84C;
-            --gold-dim: rgba(201, 168, 76, 0.35);
-            --gold-faint: rgba(201, 168, 76, 0.08);
-            --amber: #EF7D00;
-            --amber-glow: rgba(239, 125, 0, 0.25);
-            --blue: #2979FF;
-            --green: #00C853;
-            --text-bright: #FEFCF6;
-            --text-primary: #E8E2D6;
-            --text-secondary: #9B96A8;
-            --text-muted: #5E596E;
-            --border: rgba(201, 168, 76, 0.12);
+            --bg-deepest: #F4EFE6;
+            --bg-dark: #EEE6D9;
+            --bg-surface: #FFFAF2;
+            --bg-card: #FFFBF5;
+            --bg-card-hover: #EFE4D6;
+            --gold: #9C4928;
+            --gold-dim: rgba(156, 73, 40, 0.35);
+            --gold-faint: rgba(156, 73, 40, 0.08);
+            --amber: #9C4928;
+            --amber-glow: rgba(156, 73, 40, 0.25);
+            --blue: #185DB5;
+            --green: #237348;
+            --text-bright: #28231F;
+            --text-primary: #382F28;
+            --text-secondary: #655B51;
+            --text-muted: #766B60;
+            --border: rgba(156, 73, 40, 0.18);
             --font-display: 'Cormorant Garamond', 'Georgia', serif;
             --font-body: 'DM Sans', 'Helvetica Neue', sans-serif;
         }
@@ -113,8 +114,8 @@
            SCROLL REVEAL
            ======================================== */
         .reveal {
-            opacity: 0;
-            transform: translateY(28px);
+            opacity: 1;
+            transform: none;
             transition: opacity 0.75s cubic-bezier(0.23, 1, 0.32, 1),
                         transform 0.75s cubic-bezier(0.23, 1, 0.32, 1);
         }
@@ -141,7 +142,7 @@
             transition: background 0.4s, box-shadow 0.4s;
         }
         .nav.scrolled {
-            background: rgba(4, 4, 12, 0.88);
+            background: rgba(244, 239, 230, 0.96);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             box-shadow: 0 1px 0 var(--border);
@@ -200,16 +201,16 @@
            HERO
            ======================================== */
         .hero {
-            min-height: 100vh;
+            min-height: 0;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             position: relative;
             overflow: hidden;
-            padding: 8rem 0 6rem;
-            background: radial-gradient(ellipse 70% 50% at 50% 40%, rgba(201, 168, 76, 0.06) 0%, transparent 70%),
-                        radial-gradient(ellipse 90% 60% at 50% 100%, rgba(16, 16, 42, 0.8) 0%, transparent 60%),
+            padding: 7rem 0 3rem;
+            background: radial-gradient(ellipse 70% 50% at 50% 40%, rgba(156, 73, 40, 0.06) 0%, transparent 70%),
+                        radial-gradient(ellipse 90% 60% at 50% 100%, rgba(238, 230, 217, 0.8) 0%, transparent 60%),
                         var(--bg-deepest);
         }
         .hero-glow {
@@ -798,7 +799,7 @@
                 top: 100%;
                 left: 0;
                 right: 0;
-                background: rgba(4, 4, 12, 0.97);
+                background: rgba(244, 239, 230, 0.98);
                 backdrop-filter: blur(16px);
                 -webkit-backdrop-filter: blur(16px);
                 padding: 1.25rem 1.5rem;
@@ -839,6 +840,60 @@
             .btn-download { font-size: 0.9rem; padding: 0.8rem 1.5rem; }
             .feature-card { padding: 1.5rem 1.25rem; }
         }
+        .product-preview {
+            padding: 5rem 1.5rem;
+            background: #f4efe6;
+            color: #28231f;
+        }
+        .product-preview .section-label { color: #a7542b; }
+        .product-preview h2 { color: #28231f; font-size: clamp(2.3rem, 5vw, 4rem); line-height: 1.1; }
+        .preview-intro { max-width: 660px; margin: 1.25rem auto 2rem; color: #655b51; text-align: center; }
+        .preview-player { display: block; width: 100%; aspect-ratio: 16 / 9; border-radius: 18px; background: #242321; box-shadow: 0 16px 48px #28231f20; }
+        .preview-caption { max-width: 820px; margin: 1rem auto 0; color: #655b51; font-size: .85rem; text-align: center; }
+        .practice-gallery { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+        .practice-gallery figure { margin: 0; min-width: 0; }
+        .practice-gallery img { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid #d5cbbe; }
+        .practice-gallery figcaption { padding: .8rem .2rem; font-size: .9rem; color: #655b51; }
+        .practice-gallery .phone-showcase { grid-column: 1 / -1; }
+        .practice-shot { display: block; width: 100%; height: auto; border-radius: 16px; border: 1px solid var(--border); }
+        .preview-link { display: inline-block; margin-top: 1.25rem; color: var(--gold); text-decoration: underline; text-underline-offset: 4px; }
+        :focus-visible { outline: 3px solid var(--gold); outline-offset: 5px; }
+        section[id] { scroll-margin-top: 80px; }
+        .hero-layout { width: min(1180px, 100%); display: grid; grid-template-columns: .85fr 1.15fr; align-items: center; gap: 2rem; padding: 0 1.5rem; z-index: 2; }
+        .hero-content { text-align: left; padding: 0; }
+        .hero-icon { width: 56px; height: 56px; margin: 0 0 1.25rem; border-radius: 13px; }
+        .hero h1 { font-weight: 600; }
+        .hero-tagline { margin: 1.25rem 0 1.5rem; }
+        .hero-audience { color: var(--gold); font-size: .8rem; font-weight: 700; letter-spacing: .04em; }
+        .hero-product { margin: 0; min-width: 0; }
+        .hero-product img { border-radius: 18px; box-shadow: 0 16px 40px #28231f18; }
+        .hero-product figcaption { font-size: .75rem; color: var(--text-secondary); margin-top: .65rem; }
+        .hero-scroll { display: none; }
+        .preview-player + .preview-caption { line-height: 1.7; }
+        .preview-action { text-align: center; margin: 1.5rem auto 0; }
+        .preview-action a { color: var(--gold); font-weight: 700; text-decoration: underline; text-underline-offset: 4px; }
+        .faq { background: var(--bg-dark); }
+        .faq details { border-bottom: 1px solid var(--border); padding: 1.25rem 0; }
+        .faq summary { cursor: pointer; font-size: 1.05rem; font-weight: 700; }
+        .faq details p { max-width: 760px; margin-top: .75rem; color: var(--text-secondary); }
+        .faq a { text-decoration: underline; text-underline-offset: 3px; }
+        @media (max-width: 900px) {
+            .hero-layout { grid-template-columns: 1fr; max-width: 680px; }
+            .hero-content { text-align: center; }
+            .hero-icon { margin-left: auto; margin-right: auto; }
+            .hero-tagline { margin-left: auto; margin-right: auto; }
+            .hero { padding: 6.5rem 0 2rem; }
+            .hero h1 { font-size: clamp(2.8rem, 9vw, 4rem); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after { animation: none !important; transition: none !important; }
+            .reveal { opacity: 1; transform: none; }
+        }
+        @media (max-width: 700px) {
+            .product-preview { padding: 3.5rem 1rem; }
+            .practice-gallery { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -848,12 +903,13 @@
         <div class="nav-inner">
             <a href="/" class="nav-logo">Sonata Piano</a>
             <div class="nav-links" id="navLinks">
+                <a href="#preview">Watch Demo</a>
                 <a href="#features">Features</a>
                 <a href="#library">Library</a>
                 <a href="#pricing">Pricing</a>
                 <a href="https://apps.apple.com/app/id6759943429" class="nav-cta">Download</a>
             </div>
-            <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
             </button>
         </div>
@@ -869,15 +925,25 @@
             <div class="staff-line"></div>
             <div class="staff-line"></div>
         </div>
+        <div class="hero-layout">
         <div class="hero-content">
             <img src="assets/app-icon.png?v=2" alt="Sonata Piano" class="hero-icon" width="110" height="110">
-            <h1>Your piano journey<br><em>begins.</em></h1>
-            <p class="hero-tagline">Master classical piano with professional engraved sheet music, real Yamaha&nbsp;C5 piano sound, and intelligent practice tools &mdash; all on your device.</p>
+            <p class="hero-audience">For beginners, intermediate players, and returning pianists</p>
+            <h1>Make room<br><em>for music.</em></h1>
+            <p class="hero-tagline">The pieces you love. The pace you need. Practice classical piano with sheet music, real piano sound, and tools that help you build confidence one hand at a time.</p>
             <a href="https://apps.apple.com/app/id6759943429" class="btn-download">
                 <svg width="18" height="22" viewBox="0 0 18 22" fill="currentColor" aria-hidden="true"><path d="M14.94 11.58c-.02-2.28 1.86-3.37 1.95-3.43-1.06-1.55-2.71-1.76-3.3-1.79-1.4-.14-2.74.83-3.45.83-.72 0-1.82-.81-2.99-.79-1.54.02-2.96.9-3.75 2.28-1.6 2.78-.41 6.9 1.15 9.16.76 1.1 1.67 2.34 2.87 2.29 1.15-.05 1.59-.74 2.98-.74 1.39 0 1.78.74 2.99.72 1.24-.02 2.03-1.12 2.78-2.23.88-1.28 1.24-2.51 1.26-2.58-.03-.01-2.42-.93-2.44-3.7zM12.63 4.15c.63-.77 1.06-1.83.94-2.9-.91.04-2.01.61-2.66 1.37-.58.67-1.09 1.75-.96 2.78 1.02.08 2.05-.52 2.68-1.25z"/></svg>
                 Download on the App Store
             </a>
-            <p class="hero-trial">7-day free trial &middot; No credit card required</p>
+            <p class="hero-trial">140+ classical pieces &middot; iPhone and iPad</p>
+            <a class="preview-link" href="#preview">Watch the 18-second demo &darr;</a>
+        </div>
+        <figure class="hero-product">
+            <a href="#preview" aria-label="Watch the Sonata iPad demo">
+                <img src="assets/campaign-1.0.6/ipad-note-guide.png" width="2752" height="2064" fetchpriority="high" alt="Sonata iPad preview showing sheet music, upcoming notes, and highlighted piano keys">
+            </a>
+            <figcaption>iPad interface preview &middot; new note guide in version 1.0.6, currently in TestFlight</figcaption>
+        </figure>
         </div>
         <div class="hero-scroll" aria-hidden="true">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10l5 5 5-5"/></svg>
@@ -885,67 +951,56 @@
     </section>
 
     <!-- ======== HOOK: DIFFERENTIATOR ======== -->
+    <section class="product-preview" id="preview" aria-labelledby="preview-title">
+        <div class="section-inner">
+            <span class="section-label">See Sonata in action</span>
+            <h2 id="preview-title">See the music.<br>Set your pace.</h2>
+            <p class="preview-intro">A little guidance makes the next note feel closer. Preview falling notes on iPad, slower playback, and focused right-hand practice in 18 seconds.</p>
+            <video class="preview-player" controls playsinline muted preload="metadata"
+                   poster="assets/campaign-1.0.6/video-poster.png"
+                   aria-label="Sonata iPad practice demonstration" aria-describedby="preview-description">
+                <source src="assets/campaign-1.0.6/sonata-demo-1080p.mp4" type="video/mp4">
+                <track kind="captions" src="assets/campaign-1.0.6/demo.vtt" srclang="en" label="English">
+                <a href="assets/campaign-1.0.6/sonata-demo-1080p.mp4">Download the Sonata demo</a>
+            </video>
+            <p class="preview-caption" id="preview-description">Silent, 18-second demo. Plays when scrolled into view unless reduced motion or data saving is enabled; use the controls to pause or replay. Rendered from the version 1.0.6 app interface: falling notes, 50% playback speed, and right-hand practice. The new iPad note guide is currently in TestFlight; App Store availability follows release.</p>
+            <p class="preview-action"><a href="https://apps.apple.com/app/id6759943429">Explore Sonata on the App Store &rarr;</a></p>
+            <div class="practice-gallery">
+                <figure>
+                    <a href="assets/campaign-1.0.6/ipad-tempo-loop.png">
+                        <img src="assets/campaign-1.0.6/ipad-tempo-loop.png" width="2752" height="2064" loading="lazy" decoding="async" alt="Sonata on iPad with playback slowed to 50% and a measure loop selected">
+                    </a>
+                    <figcaption>Slow the tempo and repeat the measures that need a little more time.</figcaption>
+                </figure>
+                <figure>
+                    <a href="assets/campaign-1.0.6/ipad-hands.png">
+                        <img src="assets/campaign-1.0.6/ipad-hands.png" width="2752" height="2064" loading="lazy" decoding="async" alt="Sonata on iPad with right-hand practice selected and the other hand dimmed in the note guide">
+                    </a>
+                    <figcaption>Focus on one hand, then bring both hands together at your own pace.</figcaption>
+                </figure>
+                <figure class="phone-showcase">
+                    <a href="assets/campaign-1.0.6/iphone-practice.png">
+                        <img src="assets/campaign-1.0.6/iphone-practice.png" width="2868" height="1320" loading="lazy" decoding="async" alt="Sonata on iPhone with sheet music, playback controls, and an interactive piano keyboard">
+                    </a>
+                    <figcaption>On iPhone, keep your score and interactive piano together in one landscape view.</figcaption>
+                </figure>
+            </div>
+        </div>
+    </section>
+
     <section class="hook" id="hook">
         <div class="section-inner">
             <div class="hook-grid">
                 <div class="hook-text">
-                    <span class="section-label reveal">The Difference</span>
-                    <h2 class="reveal reveal-d1">Real notation.<br>Not falling blocks.</h2>
-                    <p class="reveal reveal-d2">While other apps gamify your practice with falling blocks and colored lights, Sonata Piano displays professional engraved sheet music &mdash; the same notation you&rsquo;d see in a printed score.</p>
-                    <p class="reveal reveal-d3">Build real musical literacy from day one.</p>
+                    <span class="section-label reveal">Notation meets guidance</span>
+                    <h2 class="reveal reveal-d1">Read the score.<br>See what comes next.</h2>
+                    <p class="reveal reveal-d2">Sheet music stays at the heart of Sonata. On iPad, the new optional falling-note guide shows upcoming notes alongside the score, with blue for your right hand and green for your left.</p>
+                    <p class="reveal reveal-d3">Prefer notation alone? Switch the guide off. On iPhone, keep your sheet music and interactive piano together in a focused practice view.</p>
                 </div>
                 <div class="hook-visual reveal reveal-d2">
-                    <div class="notation-display notation-others">
-                        <span class="badge">Other Apps</span>
-                        <div class="falling-blocks">
-                            <div class="falling-block fb-1"></div>
-                            <div class="falling-block fb-2"></div>
-                            <div class="falling-block fb-3"></div>
-                            <div class="falling-block fb-4"></div>
-                            <div class="falling-block fb-5"></div>
-                            <div class="falling-block fb-6"></div>
-                            <div class="falling-block fb-7"></div>
-                            <div class="falling-block fb-8"></div>
-                        </div>
-                        <p class="falling-blocks-label">Colored blocks fall&hellip; but you never learn to read music.</p>
-                    </div>
-                    <div class="notation-display notation-sonata">
-                        <span class="badge">Sonata Piano</span>
-                        <svg class="notation-svg" viewBox="0 0 360 90" fill="none" aria-hidden="true">
-                            <!-- Staff lines -->
-                            <line x1="0" y1="22" x2="360" y2="22" stroke="currentColor" stroke-width="0.7" opacity="0.5"/>
-                            <line x1="0" y1="34" x2="360" y2="34" stroke="currentColor" stroke-width="0.7" opacity="0.5"/>
-                            <line x1="0" y1="46" x2="360" y2="46" stroke="currentColor" stroke-width="0.7" opacity="0.5"/>
-                            <line x1="0" y1="58" x2="360" y2="58" stroke="currentColor" stroke-width="0.7" opacity="0.5"/>
-                            <line x1="0" y1="70" x2="360" y2="70" stroke="currentColor" stroke-width="0.7" opacity="0.5"/>
-                            <!-- Treble clef -->
-                            <text x="8" y="62" font-size="52" fill="currentColor" font-family="serif" opacity="0.7">&#119070;</text>
-                            <!-- Time signature -->
-                            <text x="52" y="40" font-size="18" fill="currentColor" font-family="serif" font-weight="bold" opacity="0.6">3</text>
-                            <text x="52" y="62" font-size="18" fill="currentColor" font-family="serif" font-weight="bold" opacity="0.6">4</text>
-                            <!-- Notes — simplified Moonlight Sonata motif -->
-                            <ellipse cx="90" cy="64" rx="6.5" ry="5" fill="currentColor" transform="rotate(-12, 90, 64)" opacity="0.75"/>
-                            <line x1="96" y1="64" x2="96" y2="28" stroke="currentColor" stroke-width="1.5" opacity="0.75"/>
-                            <ellipse cx="120" cy="52" rx="6.5" ry="5" fill="currentColor" transform="rotate(-12, 120, 52)" opacity="0.75"/>
-                            <line x1="126" y1="52" x2="126" y2="18" stroke="currentColor" stroke-width="1.5" opacity="0.75"/>
-                            <ellipse cx="150" cy="58" rx="6.5" ry="5" fill="currentColor" transform="rotate(-12, 150, 58)" opacity="0.75"/>
-                            <line x1="156" y1="58" x2="156" y2="22" stroke="currentColor" stroke-width="1.5" opacity="0.75"/>
-                            <!-- Bar line -->
-                            <line x1="180" y1="22" x2="180" y2="70" stroke="currentColor" stroke-width="0.8" opacity="0.4"/>
-                            <ellipse cx="205" cy="46" rx="6.5" ry="5" fill="currentColor" transform="rotate(-12, 205, 46)" opacity="0.75"/>
-                            <line x1="211" y1="46" x2="211" y2="14" stroke="currentColor" stroke-width="1.5" opacity="0.75"/>
-                            <ellipse cx="235" cy="40" rx="6.5" ry="5" fill="currentColor" transform="rotate(-12, 235, 40)" opacity="0.75"/>
-                            <line x1="241" y1="40" x2="241" y2="10" stroke="currentColor" stroke-width="1.5" opacity="0.75"/>
-                            <ellipse cx="265" cy="52" rx="6.5" ry="5" fill="currentColor" transform="rotate(-12, 265, 52)" opacity="0.75"/>
-                            <line x1="271" y1="52" x2="271" y2="18" stroke="currentColor" stroke-width="1.5" opacity="0.75"/>
-                            <!-- Bar line -->
-                            <line x1="295" y1="22" x2="295" y2="70" stroke="currentColor" stroke-width="0.8" opacity="0.4"/>
-                            <ellipse cx="320" cy="58" rx="6.5" ry="5" fill="currentColor" transform="rotate(-12, 320, 58)" opacity="0.75"/>
-                            <line x1="326" y1="58" x2="326" y2="22" stroke="currentColor" stroke-width="1.5" opacity="0.75"/>
-                            <ellipse cx="348" cy="46" rx="6.5" ry="5" fill="none" stroke="currentColor" stroke-width="1.5" transform="rotate(-12, 348, 46)" opacity="0.55"/>
-                            <line x1="354" y1="46" x2="354" y2="14" stroke="currentColor" stroke-width="1.5" opacity="0.55"/>
-                        </svg>
-                    </div>
+                    <a href="assets/campaign-1.0.6/ipad-note-guide.png">
+                        <img class="practice-shot" src="assets/campaign-1.0.6/ipad-note-guide.png" width="2752" height="2064" loading="lazy" decoding="async" alt="Version 1.0.6 iPad preview: sheet music, falling notes, and highlighted piano keys in Sonata">
+                    </a>
                 </div>
             </div>
         </div>
@@ -955,12 +1010,12 @@
     <section class="features" id="features">
         <div class="section-inner">
             <span class="section-label reveal">Practice Tools</span>
-            <h2 class="reveal reveal-d1">Everything you need to master any piece.</h2>
+            <h2 class="reveal reveal-d1">Small steps. More confident practice.</h2>
             <div class="features-grid">
                 <div class="feature-card reveal reveal-d1">
                     <span class="feature-tag tag-essential">Essential</span>
                     <h3>Wait Mode</h3>
-                    <p>The score pauses until you play the correct notes. The most effective way to learn a new passage, measure by measure.</p>
+                    <p>Pause at each note group while you play your response. Replay or skip when you need to, instead of racing to keep up.</p>
                 </div>
                 <div class="feature-card reveal reveal-d2">
                     <span class="feature-tag tag-essential">Essential</span>
@@ -970,7 +1025,7 @@
                 <div class="feature-card reveal reveal-d3">
                     <span class="feature-tag tag-sound">Sound</span>
                     <h3>Yamaha C5 Grand</h3>
-                    <p>Every note plays back as a real Yamaha C5 grand piano recording. Not synthesized, not sampled patches &mdash; real piano.</p>
+                    <p>Hear your piece played with sampled Yamaha C5 grand piano recordings, including natural note decay.</p>
                 </div>
                 <div class="feature-card reveal reveal-d1">
                     <span class="feature-tag tag-essential">Essential</span>
@@ -996,7 +1051,7 @@
         <div class="section-inner">
             <span class="section-label reveal">The Library</span>
             <h2 class="reveal reveal-d1">140+ masterpieces from the greatest composers.</h2>
-            <p class="reveal reveal-d2" style="color:var(--text-secondary); max-width:520px; margin: 0 auto 0; font-size:1rem;">All included. All offline. From your first scale to concert-level repertoire.</p>
+            <p class="reveal reveal-d2" style="color:var(--text-secondary); max-width:520px; margin: 0 auto 0; font-size:1rem;">Browse by composer or difficulty, save favorites, and return to pieces you want to keep working on. Scores are bundled with the app.</p>
         </div>
 
         <div class="marquee-wrapper" aria-hidden="true">
@@ -1080,10 +1135,42 @@
     </section>
 
     <!-- ======== PRICING ======== -->
+    <section class="faq" id="questions" aria-labelledby="questions-title">
+        <div class="section-inner">
+            <span class="section-label">Before you start</span>
+            <h2 id="questions-title">A few good questions.</h2>
+            <details>
+                <summary>Is Sonata for someone at my level?</summary>
+                <p>Sonata is a practice companion for exploring classical pieces, slowing passages down, and working on each hand separately. Beginners can start with simpler pieces; intermediate and returning players can use the same tools to work through harder sections. It is not a replacement for a teacher or a complete course in piano technique.</p>
+            </details>
+            <details>
+                <summary>Do I need a MIDI keyboard?</summary>
+                <p>No. You can use the on-screen piano, connect a compatible keyboard over USB or Bluetooth MIDI, or use the microphone with an acoustic piano. The connection method depends on your keyboard and any adapter it requires.</p>
+            </details>
+            <details>
+                <summary>How does acoustic practice work?</summary>
+                <p>The microphone listens for the notes you play. Detection can vary with the instrument, room, microphone position, and chords or sustained notes. Replay and skip controls help when a note is not picked up. MIDI sends note messages directly instead of relying on microphone detection.</p>
+            </details>
+            <details>
+                <summary>Does the falling-note guide work on iPhone?</summary>
+                <p>The new optional guide is for iPad in version 1.0.6, currently in TestFlight. iPhone practice uses the sheet-music and piano-keyboard view. The demo on this page previews the updated iPad interface, not a live microphone-recognition test.</p>
+            </details>
+            <details>
+                <summary>Can I practice without internet?</summary>
+                <p>The scores and piano samples are bundled with the app. Purchases, restoring access, and periodic subscription checks still need an internet connection.</p>
+            </details>
+            <details>
+                <summary>What should I try first?</summary>
+                <p>Pick a piece you know, reduce the tempo, and try one hand. Loop a short passage before moving on. If you have a keyboard, try MIDI input; if you are using an acoustic piano, start with a quiet room and a simple passage.</p>
+            </details>
+        </div>
+    </section>
+
     <section class="pricing" id="pricing">
         <div class="section-inner">
             <span class="section-label reveal">Pricing</span>
-            <h2 class="reveal reveal-d1">Start your 7-day free trial.</h2>
+            <h2 class="reveal reveal-d1">Choose how you want to practice.</h2>
+            <p class="preview-intro">Eligible new subscribers can try the monthly or annual plan free for 7 days. Prefer a one-time purchase? Choose lifetime access.</p>
 
             <div class="pricing-grid">
                 <div class="pricing-card reveal reveal-d1">
@@ -1098,26 +1185,26 @@
                     <p class="pricing-plan">Annual</p>
                     <p class="pricing-amount"><span class="currency">$</span>69<span style="font-size:1.5rem">.99</span></p>
                     <p class="pricing-period">per year &middot; ~$5.83/mo</p>
-                    <p class="pricing-detail">Save 42%</p>
+                    <p class="pricing-detail">About 42% less than 12 monthly payments</p>
                     <a href="https://apps.apple.com/app/id6759943429" class="pricing-btn pricing-btn-primary">Start Free Trial</a>
                 </div>
                 <div class="pricing-card reveal reveal-d3">
                     <p class="pricing-plan">Lifetime</p>
                     <p class="pricing-amount"><span class="currency">$</span>249<span style="font-size:1.5rem">.99</span></p>
                     <p class="pricing-period">one-time payment</p>
-                    <p class="pricing-detail">Pay once, yours forever</p>
-                    <a href="https://apps.apple.com/app/id6759943429" class="pricing-btn pricing-btn-secondary">Start Free Trial</a>
+                    <p class="pricing-detail">Lifetime access &middot; no recurring subscription</p>
+                    <a href="https://apps.apple.com/app/id6759943429" class="pricing-btn pricing-btn-secondary">View Lifetime Access</a>
                 </div>
             </div>
 
-            <p class="pricing-note reveal">Full access to everything during your trial. Cancel anytime.</p>
+            <p class="pricing-note reveal">Prices shown are in USD for the U.S. App Store. Local prices and trial eligibility may vary. Subscriptions renew automatically unless canceled. Review your price, any introductory offer, and renewal terms in Apple&rsquo;s purchase confirmation. Lifetime access is a separate one-time purchase.</p>
         </div>
     </section>
 
     <!-- ======== TRUST ======== -->
     <section class="trust">
         <div class="section-inner">
-            <h2 class="reveal">Your data never leaves your device.</h2>
+            <h2 class="reveal">Less setup. More time at the piano.</h2>
             <div class="trust-grid">
                 <div class="trust-item reveal reveal-d1">
                     <div class="trust-icon">
@@ -1135,7 +1222,7 @@
                     <div class="trust-icon">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="11" width="20" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
                     </div>
-                    <span class="trust-label">Works completely offline</span>
+                    <span class="trust-label">Scores bundled for offline practice</span>
                 </div>
             </div>
         </div>
@@ -1155,16 +1242,16 @@
 
     <script>
         /* Scroll reveal with IntersectionObserver */
-        const observer = new IntersectionObserver(function(entries) {
+        const observer = 'IntersectionObserver' in window ? new IntersectionObserver(function(entries) {
             entries.forEach(function(entry) {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
                 }
             });
-        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }) : null;
 
         document.querySelectorAll('.reveal').forEach(function(el) {
-            observer.observe(el);
+            if (observer) observer.observe(el);
         });
 
         /* Nav scroll state */
@@ -1185,13 +1272,23 @@
         var links = document.getElementById('navLinks');
         toggle.addEventListener('click', function() {
             links.classList.toggle('open');
+            toggle.setAttribute('aria-expanded', String(links.classList.contains('open')));
         });
         /* Close mobile menu on link click */
         links.querySelectorAll('a').forEach(function(a) {
             a.addEventListener('click', function() {
                 links.classList.remove('open');
+                toggle.setAttribute('aria-expanded', 'false');
             });
         });
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && links.classList.contains('open')) {
+                links.classList.remove('open');
+                toggle.setAttribute('aria-expanded', 'false');
+                toggle.focus();
+            }
+        });
     </script>
+    <script src="assets/video-preview.js" defer></script>
 </body>
 </html>
