@@ -16,7 +16,7 @@ Approved assets live in `assets/campaign-1.0.6/`. The video is an 18-second sile
 
 These visuals were rendered from the updated app's production Flutter widgets, not a live recording of microphone or MIDI recognition. Do not claim that the campaign demonstrates recognition accuracy. The falling-note guide is iPad-only; iPhone imagery shows the notation and keyboard view.
 
-The page labels 1.0.6 as a TestFlight preview because the public App Store version was 1.0.5 at preparation time. Remove the TestFlight availability note only after confirming 1.0.6 is publicly released.
+1.0.6 is publicly released on the App Store. Landing copy treats the iPad falling-note guide as publicly available on the App Store.
 
 Deployment uses the repository's GitHub Pages configuration. Commit and push only after authorization, then verify the Pages deployment and the public video URL. Updating files locally does not publish them.
 
@@ -32,6 +32,6 @@ The canonical GitHub Pages legal URLs redirect to the custom domain. No legal pa
 
 The U.S. App Store listing confirms monthly $9.99, annual $69.99, and lifetime $249.99: https://apps.apple.com/us/app/sonata-piano/id6759943429. App Store Connect reports approved monthly and annual products with an active U.S. `FREE_TRIAL` offer lasting `ONE_WEEK`. Prices are labeled USD/U.S.; eligibility and local terms are left to Apple's purchase confirmation. Lifetime has a separate non-trial CTA. No prices or subscription configurations were changed.
 
-The page uses the approved app UI assets instead of invented testimonials, ratings, student counts, or a fake live keyboard demonstration. Real keyboard footage and consented tester testimonials remain future additions requiring source material. Acoustic limitations and the TestFlight-only status of the new guide are visible in the FAQ.
+The page uses the approved app UI assets instead of invented testimonials, ratings, student counts, or a fake live keyboard demonstration. Real keyboard footage and consented tester testimonials remain future additions requiring source material. Acoustic limitations and the iPad-only status of the new guide are visible in the FAQ.
 
 The visual refresh uses warm ivory surfaces and copper accents, a product-led hero, visible keyboard focus, native FAQ disclosure controls, and reduced-motion CSS. Page content remains visible without JavaScript or IntersectionObserver support.
