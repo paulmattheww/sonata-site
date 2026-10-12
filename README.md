@@ -35,3 +35,18 @@ The U.S. App Store listing confirms monthly $9.99, annual $69.99, and lifetime $
 The page uses the approved app UI assets instead of invented testimonials, ratings, student counts, or a fake live keyboard demonstration. Real keyboard footage and consented tester testimonials remain future additions requiring source material. Acoustic limitations and the iPad-only status of the new guide are visible in the FAQ.
 
 The visual refresh uses warm ivory surfaces and copper accents, a product-led hero, visible keyboard focus, native FAQ disclosure controls, and reduced-motion CSS. Page content remains visible without JavaScript or IntersectionObserver support.
+
+## First Light and Composer mode — October 12, 2026
+
+The header, hero, favicon and touch icon use the approved First Light artwork
+from Sonata's iOS asset catalog (source app commit `1556b75`). The 1024 px master
+and existing 180/40 px catalog assets are copied directly without regenerating
+the logo. Orange actions use dark text for contrast; existing campaign
+screenshots and video are retained. Legal text, links and CNAME are unchanged;
+only favicon references changed in the legal-page heads.
+
+The Composer mode section describes the internal testing milestone: blank piano,
+chord/arp guidance, passing-note suggestions, themes, exact range, section bass,
+mixed meters, looping, local collections and generated-score PDF export. It is
+clearly labeled upcoming and unavailable in the public App Store build. Remove
+that qualification only after public release is verified.
