@@ -50,3 +50,32 @@ chord/arp guidance, passing-note suggestions, themes, exact range, section bass,
 mixed meters, looping, local collections and generated-score PDF export. It is
 clearly labeled upcoming and unavailable in the public App Store build. Remove
 that qualification only after public release is verified.
+
+## Composer preview — October 14, 2026
+
+The new 24-second silent H.264 video and gallery are actual build-49 captures:
+Amazing Grace's documented Mutopia public-domain hymn edition, original C–Am–F–G
+arpeggios with a 1–5–1–8 bass pattern, and C-major/G-major/E-minor scale runs.
+The page labels these capabilities as upcoming/internal testing. Composer Mode
+is not yet available in the public App Store build. No public app release is
+implied by publishing this website preview.
+
+Five ASC screenshots per device were prepared alongside this campaign (iPhone
+1320×2868 portrait; iPad 2752×2064 landscape). They are not published to ASC by
+this repo. Source captures and screenshots are in Sonata's local
+`output/releases/sonata-composer-49/` report folder. Reproduction is in
+`tools/render_composer_preview.py`; source UI capture is in Sonata commit
+`e1803ac`, `mobile/integration_test/release49_capture_test.dart`.
+
+The older campaign's Fur Elise media is replaced rather than reused: the app
+repository's `repertoire/rights-audit-2026-10-14.md` records unresolved edition
+rights in the older catalogue. The new material does not clear that catalogue.
+First Light artwork, the existing native video controls/reduced-motion logic,
+and the legal pages remain in place. Library engraving credits Verovio.
+
+Checks: all local asset paths and anchor targets resolve, image aspect ratios
+match their attributes, screenshots use RGB with accepted device dimensions,
+and video is 1920×1080 H.264 / 24 seconds with no audio track. All generated
+screenshots and sample video frames were inspected. The local website browser
+preview was denied by a saved browser-permission setting; no local browser
+layout verification is claimed.
