@@ -67,9 +67,9 @@ this repo. Source captures and screenshots are in Sonata's local
 `tools/render_composer_preview.py`; source UI capture is in Sonata commit
 `e1803ac`, `mobile/integration_test/release49_capture_test.dart`.
 
-The older campaign's Fur Elise media is replaced rather than reused: the app
-repository's `repertoire/rights-audit-2026-10-14.md` records unresolved edition
-rights in the older catalogue. The new material does not clear that catalogue.
+Paul subsequently confirmed that the older catalogue is already cleared. The
+release preview now also uses the approved Für Elise captures; this records the
+owner's clearance, rather than a new independent legal determination.
 First Light artwork, the existing native video controls/reduced-motion logic,
 and the legal pages remain in place. Library engraving credits Verovio.
 
@@ -79,3 +79,34 @@ and video is 1920×1080 H.264 / 24 seconds with no audio track. All generated
 screenshots and sample video frames were inspected. The local website browser
 preview was denied by a saved browser-permission setting; no local browser
 layout verification is claimed.
+
+
+## Sonata 1.1 release preview refresh — October 14, 2026
+
+The site now uses First Light cream/orange accents, the approved header and search
+artwork, a 1200×630 social sharing image, and actual highlighted Für Elise captures.
+Composer Mode copy covers configurable scales/modes, 1–5–1–8 bass patterns,
+collection time signatures with section overrides, and portrait PDF export.
+The old measure-card PDF preview is replaced with the corrected build-51 score;
+`assets/composer-preview/daily-scales.pdf` is a downloadable original exercise.
+
+The 24-second video uses the same real build-49 recordings with updated title
+plates. Reproduce this refresh with:
+
+```sh
+python3 tools/refresh_release_preview.py ../sonata/output/releases
+```
+
+The earlier renderer is retained for historical reproduction only; it generates
+older ASC screenshots and must not be used for the current listing.
+
+Availability remains **Coming in Sonata 1.1** until the public App Store release
+is verified. Publishing this site does not submit or release the app. The owner
+reports attaching the production build in ASC; submission encountered a missing
+Spanish (Mexico) What's New field. No app availability is inferred from that.
+
+Validation: asset paths, image dimensions, internal anchors, PDF identity and
+video encoding/duration are checked locally. Assets and video frames are inspected.
+No browser layout verification is claimed because the browser preview permission
+was unavailable. Legal pages, tracking parameters and subscription prices remain
+unchanged.
